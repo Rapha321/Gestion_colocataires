@@ -22,7 +22,7 @@
         ':pic' => $pic
     ));
 
-    header("location:../client/pagePrincipal.html");
+    header("location:../client/profileLocataire.php");
 
     $req->closeCursor();
 

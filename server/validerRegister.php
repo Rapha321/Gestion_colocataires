@@ -17,7 +17,7 @@
     {
         $req = $bdd->prepare("INSERT INTO proprietaire (email, pwd) VALUES (:email, :pwd)");
         $req->execute([':email' => $email, ':pwd' => $pwd]);
-        header("location:infoProprietaire.php");
+        header("location:../client/infoProprietaire.html");
     } 
 
 ?> 
