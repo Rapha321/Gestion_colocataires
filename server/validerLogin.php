@@ -1,26 +1,63 @@
 <?php
 
-include('Configuration.php');
+    include('Configuration.php');
 
-$select = $bdd->query('SELECT * FROM locataire');
+    $jeSuisUn = $_POST['jeSuisUn'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
+    if ($jeSuisUn == "locataire") 
+    {
+        $select = $bdd->query('SELECT * FROM locataire');
+    } 
+    else if ($jeSuisUn == "proprietaire") 
+    {
+        $select = $bdd->query('SELECT * FROM proprietaire');
+    } 
 
+    $valider = false;
+
+    while($donnees = $select->fetch())
+    {
+        if ($email == $donnees['email'] && $password == $donnees['password']) 
+        {
+            header("location:GestionEtudiant.php");
+            $valider = true;
+        } 
+    }
+
+    if ($valider == false) 
+    {
 
 ?>
 
-<?php
-while($donnees = $select->fetch()){
-?>
+<!DOCTYPE html>
+<html>
 
-<table>
-    <tr>
-        <td> <?php echo $donnees['nom'] ?> </td>
-    </tr>
-    <tr>
-        <td> <?php echo $donnees['prenom'] ?> </td>
-    </tr>
-</table>
+    <head>
+        <title>Login</title>
 
-<?php
+        <!-- CSS -->
+        <link rel="stylesheet" type="text/css" href="../styles/style.css">
+
+        <!-- BOOTSTRAP -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    </head>
+
+    <body>
+
+        <div class="jumbotron">
+
+            <h5>Erreur: L'information saisie ne pas correct. Veuillez re-essayer!</h5>
+            <br>
+            <a href="../client/login.html"><input type="submit" value="Retour" class="btn btn-warning"> </a>
+
+        </div>
+
+    </body>
+
+</html>
+
+<?php 
 }
 ?>
