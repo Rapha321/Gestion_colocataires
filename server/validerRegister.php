@@ -10,7 +10,7 @@
     {
         $req = $bdd->prepare("INSERT INTO locataire (email, pwd) VALUES (:email, :pwd)");
         $req->execute([':email' => $email, ':pwd' => $pwd]);
-        header("location:infoLocataire.php");
+        header("location:../client/infoLocataire.html");
         
     } 
     else if ($jeSuisUn == "proprietaire") 

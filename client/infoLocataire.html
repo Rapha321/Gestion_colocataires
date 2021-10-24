@@ -14,12 +14,12 @@
 <body>
 
 
-<!-- find the last row of database and insert additional information -->
-<h1>Felicitation! </h1>
+    <!-- find the last row of database and insert additional information -->
+    <h1>Felicitation! </h1>
 
-<h4>Veuillez saisir les information suivantes:</h4>
+    <h4>Veuillez saisir les information suivantes:</h4>
 
-    <form action="" class="jumbotron">
+    <form method="POST" action="../server/validerInfoLocataire.php" class="jumbotron">
 
         <table>
             <tr>
@@ -36,13 +36,13 @@
             </tr>
             <tr>
                 <td>A propos de vous :</td>
-                <td><textarea name="aPropos" id="" cols="40" rows="5"></textarea></td>
+                <td><textarea name="description" id="" cols="40" rows="5"></textarea></td>
             </tr>
             <tr>
                 <td>Photo :</td>
                 <td>
                     <div class="input-group mb-3">
-                        <input type="file" class="form-control" id="inputGroupFile02">
+                        <input type="file" class="form-control" id="inputGroupFile02" name="pic">
                         <label class="input-group-text" for="inputGroupFile02">Upload</label>
                     </div>
                 </td>
@@ -52,7 +52,7 @@
             </tr>
             <tr>
                 <td></td>
-                <td align="center">
+                <td>
                     <input type="submit" value="Soumettre" class="btn btn-success">
                 </td>
             </tr>

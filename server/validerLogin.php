@@ -19,10 +19,18 @@
 
     while($donnees = $select->fetch())
     {
-        if ($email == $donnees['email'] && $password == $donnees['password']) 
+        if ($email == $donnees['email'] && $password == $donnees['pwd']) 
         {
-            header("location:GestionEtudiant.php");
-            $valider = true;
+            if ($jeSuisUn == "locataire") 
+            {
+                header("location:GestionEtudiant.php"); // TO CHANGE
+                $valider = true;
+            } 
+            else if ($jeSuisUn == "proprietaire") 
+            {
+                header("location:GestionEtudiant.php"); // TO CHANGE
+                $valider = true;
+            } 
         } 
     }
 
