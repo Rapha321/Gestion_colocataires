@@ -3,69 +3,71 @@
     include('Configuration.php');
 
     $jeSuisUn = $_POST['jeSuisUn'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+    $validation = false;
 
-    if ($jeSuisUn == "locataire") 
+    if (isset($_POST['email']) && isset($_POST['password']))
     {
-        $select = $bdd->query('SELECT * FROM locataire');
-    } 
-    else if ($jeSuisUn == "proprietaire") 
-    {
-        $select = $bdd->query('SELECT * FROM proprietaire');
-    } 
-
-    $valider = false;
-
-    while($donnees = $select->fetch())
-    {
-        if ($email == $donnees['email'] && $password == $donnees['pwd']) 
+        if ($jeSuisUn == "locataire") 
         {
-            if ($jeSuisUn == "locataire") 
+            $select = $bdd->query('SELECT * FROM locataire');
+        }
+        else
+        {
+            $select = $bdd->query('SELECT * FROM proprietaire');
+        }
+        
+        while($donnees = $select->fetch())
+        {
+            if ($_POST['email'] == $donnees['email'] && $_POST['password'] == $donnees['pwd']) 
             {
-                header("location:GestionEtudiant.php"); // TO CHANGE
-                $valider = true;
+                session_start (); 
+                $_SESSION['email'] = $_POST['email']; 
+                $_SESSION['password'] = $_POST['password']; 
+                $_SESSION['donnees'] = $donnees;
+                $validation = true;
+
+                if ($jeSuisUn == "locataire") 
+                {
+                    header("location:profileLocataire.php"); // TO CHANGE
+                } 
+                else 
+                {
+                    header("location:profileProprietaire.php"); // TO CHANGE
+                } 
             } 
-            else if ($jeSuisUn == "proprietaire") 
-            {
-                header("location:GestionEtudiant.php"); // TO CHANGE
-                $valider = true;
-            } 
-        } 
+        }    
     }
-
-    if ($valider == false) 
+    
+    if (!$validation)
     {
-
 ?>
 
-<!DOCTYPE html>
-<html>
+    <!DOCTYPE html>
+    <html>
 
-    <head>
-        <title>Login</title>
+        <head>
+            <title>Login</title>
+            <meta name="viewport" content= "width=device-width, initial-scale=1.0">
 
-        <!-- CSS -->
-        <link rel="stylesheet" type="text/css" href="../styles/style.css">
+            <!-- CSS -->
+            <link rel="stylesheet" type="text/css" href="../styles/style.css">
 
-        <!-- BOOTSTRAP -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    </head>
+            <!-- BOOTSTRAP -->
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        </head>
 
-    <body>
+        <body>
 
-        <div class="jumbotron">
+            <div class="jumbotron">
+                <h5>Erreur: L'information saisie ne pas correct. Veuillez re-essayer!</h5>
+                <br>
+                <a href="../client/login.html"><input type="submit" value="Retour" class="btn btn-warning"> </a>
+            </div>
 
-            <h5>Erreur: L'information saisie ne pas correct. Veuillez re-essayer!</h5>
-            <br>
-            <a href="../client/login.html"><input type="submit" value="Retour" class="btn btn-warning"> </a>
+        </body>
 
-        </div>
-
-    </body>
-
-</html>
+    </html>
 
 <?php 
-}
+    }
 ?>
