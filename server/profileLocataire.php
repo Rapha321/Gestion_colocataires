@@ -108,10 +108,9 @@
 
                 <figure>
                     <?php 
-                        echo '<img src="data:image/jpg;base64,' . base64_encode( $info['pic'] ) . '"width="290px" height="280px" />';
+                        echo '<img src="data:image/jpg;base64,' . base64_encode( $info['pic'] ) . '"width="290px" height="280px" class="img-thumbnail"/>';
                     ?>
                 </figure>
-                <br>
                 <div>
                     <table class="table-profile">
                         <tr>
@@ -166,7 +165,8 @@
                 </div>
             </div>
             <br>
-            <input id="btn-Chercher" type="submit" value="Chercher un location" class="btn btn-primary">
+            
+            <a href="rechercheLocation.php"> <input id="btn-Chercher" type="submit" value="Chercher un location" class="btn btn-primary"> </a>
         </div>
    
 </body>
