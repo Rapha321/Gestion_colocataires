@@ -20,7 +20,6 @@
         {
             if ($_POST['email'] == $donnees['email'] && $_POST['password'] == $donnees['pwd']) 
             {
-                session_start (); 
                 $_SESSION['email'] = $_POST['email']; 
                 $_SESSION['password'] = $_POST['password']; 
                 $_SESSION['donnees'] = $donnees;

@@ -1,4 +1,7 @@
-<?php session_start (); ?>
+<?php 
+    session_start(); 
+    include('Configuration.php');
+?>
 
 <!DOCTYPE html>
 <html>
@@ -6,8 +9,9 @@
 <head>
     <title>template</title>
     <meta name="viewport" content= "width=device-width, initial-scale=1.0">
-    <!-- CSS -->
-    <!-- <link rel="stylesheet" type="text/css" href="../styles/style.css"> -->
+
+    <!-- FONT AWESOME -->
+    <script src="https://kit.fontawesome.com/1183c3861a.js" crossorigin="anonymous"></script>
 
     <!-- BOOTSTRAP -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -17,14 +21,30 @@
             display: flex;
             justify-content: center;
             flex-direction: row;
+            padding-top: 5%;
         }
 
         #btn {
             width: 350px;
             height: 35px;
-            margin-bottom: 5px;
             display: flex;
             justify-content: center;
+            margin-bottom: 5px;
+        }
+
+        .table-favori {
+            width: 90%;
+            display: flex;
+            justify-content: center;
+            margin: auto;
+        }
+
+        .div-profile {
+            height: 80%;
+        }
+
+        .div-favori {
+            height: 80%;
         }
 
         #btn-Chercher {
@@ -32,17 +52,35 @@
             height: 45px;
             display: flex;
             justify-content: center;
+            margin: auto;
         }
 
-        #container2 {
-            width: 20%;
-            height: 70%;
+        .td2 {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        .descr-favori
+        {
+            position: relative;
+            top: -15px;
+        }
+
+        #container1 {
+            width: 40%;
+            margin-left: 3%;
+            scroll-behavior: auto;
         }
 
         .prix {
             float: right;
             font-weight: bold;
             font-size: large;
+        }
+
+        .jumbotron {
+            height: 100%;
+            overflow-y: scroll;
         }
 
         .type {
@@ -54,59 +92,80 @@
 </head>
 
 <body>
-        <div>
-            <figure>
-                <?php 
-                    echo '<img src="data:image/jpg;base64,' . base64_encode( $_SESSION['donnees']['pic'] ) . '" />';
-                ?>
-            </figure>
 
-            <div>
-                <table class="favori">
-                    <tr>
-                        <th>Nom </th>
-                        <td>&nbsp; : &nbsp;</td>
-                        <td><?php echo $_SESSION['donnees']['nom']?></td>
-                    </tr>
-                    <tr>
-                        <th>Prenom </th>
-                        <td>&nbsp; : &nbsp;</td>
-                        <td><?php echo $_SESSION['donnees']['prenom']?></td>
-                    </tr>
-                    <tr>
-                        <th>Desctiption </th>
-                        <td>&nbsp; : &nbsp;</td>
-                        <td><?php echo $_SESSION['donnees']['descriptions']?></td>
-                    </tr>
-                </table>
+    <?php
+        $id = $_SESSION['donnees']['id_locataire'];
+        $select = $bdd->prepare("SELECT * FROM locataire where id_locataire=?");
+        $select->execute([$id]);
+        $info = $select->fetch();
+    ?>
+    
+    <form method="POST" action="modifierProfileLocataire.php">
+        <div class="main">
+
+
+            <div class="div-profile">
+
+                <figure>
+                    <?php 
+                        echo '<img src="data:image/jpg;base64,' . base64_encode( $info['pic'] ) . '"width="290px" height="280px" />';
+                    ?>
+                </figure>
+                <br>
+                <div>
+                    <table class="table-profile">
+                        <tr>
+                            <th>Nom </th>
+                            <td>&nbsp; : &nbsp;</td>
+                            <td><?php echo $info['nom']?></td>
+                        </tr>
+                        <tr>
+                            <th>Prenom </th>
+                            <td>&nbsp; : &nbsp;</td>
+                            <td><?php echo $info['prenom']?></td>
+                        </tr>
+                        <tr>
+                            <th>Description </th>
+                            <td>&nbsp; : &nbsp;</td>
+                            <td><?php echo $info['descriptions']?></td>
+                        </tr>
+                    </table>
+                </div>
             </div>
 
             <div>
                 <br><br>
-                
+                <hr>
                 <input id="btn" type="submit" value="Modifier profile" class="btn btn-info">
-                <input id="btn" type="submit" value="Supprimer profile" class="btn btn-danger">
+                <input id="btn" type="button" value="Supprimer profile" class="btn btn-danger">
             </div>
         </div>
+    </form>
         
-        <div class="jumbotron">
+        <div id="container1">
             <h4>Mes favori:</h4>
-            <div >
-                <table class="favori">
-                    <tr>
-                        <td>&nbsp;&nbsp;<input type="checkbox">&nbsp;&nbsp;</td>
-                        <td>
-                            <span class="type">Studio</span>
-                            <span class="prix">$700</span>
-                            <hr>
-                            <p>Studio a ouer. Tout inclus. Disponibles immediatements. Meubler!!!</p>
-                        </td>
-                        <td><picture>picture goes here</picture></td>
-                    </tr>
-                </table>
+            <div class="div-favori">
+                <div class="jumbotron" >
+                    <table class="table-favori">
+                        <tr>
+                            <td>&nbsp;&nbsp; <i class="fas fa-trash-alt"></i>&nbsp;&nbsp;</td>
+                            <td class="td2">
+                                <span class="type">Studio</span>
+                                <span class="prix">$700</span>
+                                <hr>
+                                <span class="descr-favori">Studio a louer. Tout inclus. Disponibles immediatements. Meubler!!!</span>
+                            </td>
+                            <td>
+                                <?php 
+                                echo '<img src="data:image/jpg;base64,' . base64_encode( $_SESSION['donnees']['pic'] ) . '" width="100px" height="100px" />';
+                                ?>
+                            
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
-            
-            <br><br>
+            <br>
             <input id="btn-Chercher" type="submit" value="Chercher un location" class="btn btn-primary">
         </div>
    
