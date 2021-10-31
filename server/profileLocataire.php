@@ -33,7 +33,7 @@
         }
 
         .table-favori {
-            width: 90%;
+            width: 100%;
             display: flex;
             justify-content: center;
             margin: auto;
@@ -108,7 +108,7 @@
 
                 <figure>
                     <?php 
-                        echo '<img src="data:image/jpg;base64,' . base64_encode( $info['pic'] ) . '"width="290px" height="280px" class="img-thumbnail"/>';
+                        echo '<img src="data:image/jpg;base64,' . base64_encode( $_SESSION['donnees']['pic'] ) . '"width="290px" height="280px" class="img-thumbnail"/>';
                     ?>
                 </figure>
                 <div>

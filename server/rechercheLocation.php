@@ -47,7 +47,7 @@
 
         #container1 {
             width: 50%;
-            margin-left: 2%;
+            margin-left: 1%;
             scroll-behavior: auto;
         }
 
@@ -80,6 +80,12 @@
             /* flex-direction: row; */
         }
 
+        .td2 {
+            width: 330px;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
     </style>
 
 </head>
@@ -89,34 +95,37 @@
     <div>
         <!-- FILTRE -->
         <br>
-            <form class="form-filtre">
+            <form class="form-filtre" method="POST" action="">
                 <div class="filtre">
                     <span>
                         &nbsp;&nbsp;&nbsp;
                         Ville :
                         <select name="ville" id="" class="form-select">
-                            
+                            <option value="neutre">Neutre</option>
                             <option value="montreal">Montreal</option>
                         </select>
                     </span>
                     <span>
                         &nbsp;&nbsp;&nbsp;
                         Type de logement:
-                        <select name="" id="">
+                        <select name="types" id="">
+                            <option value="neutre">Neutre</option>
                             <option value="studio">Studio</option>
                         </select>
                     </span>
                     <span>
                         &nbsp;&nbsp;&nbsp;
                         Grandeur :
-                        <select name="" id="">
+                        <select name="grandeur" id="">
+                            <option value="neutre">Neutre</option>
                             <option value="">1 1/2</option>
                         </select>
                     </span>
                     <span>
                         &nbsp;&nbsp;&nbsp;
                         Prix :
-                        <select name="" id="">
+                        <select name="prix" id="">
+                            <option value="neutre">Neutre</option>
                             <option value="">700</option>
                         </select>
                         &nbsp;&nbsp;&nbsp;
@@ -124,7 +133,6 @@
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Recherche</button>
                 </div>
             </form>
-        
     </div>
 
     <br>
@@ -176,23 +184,34 @@
         <div id="container1">
             <div class="div-favori">
                 <div class="jumbotron" >
+
+                    <?php 
+                        $select = $bdd->prepare("SELECT * FROM locations");
+                        $select->execute();
+                        while ($info = $select->fetch())
+                        {
+                    ?>
+
                     <table class="table-favori">
                         <tr>
                             <td>&nbsp;&nbsp; <i class="far fa-heart"></i>&nbsp;&nbsp;</td>
                             <td class="td2">
-                                <span class="type">Studio</span>
-                                <span class="prix">$700</span>
+                                <span class="type"> <?php echo $info['types'] ?> </span>
+                                <span class="prix"> $<?php echo $info['montant_loyer'] ?> </span>
                                 <hr>
-                                <span class="descr-favori">Studio a louer. Tout inclus. Disponibles immediatements. Meubler!!!</span>
+                                <span class="descr-favori"> <?php echo $info['description'] ?> </span>
                             </td>
                             <td>
                                 <?php 
-                                echo '<img src="data:image/jpg;base64,' . base64_encode( $_SESSION['donnees']['pic'] ) . '" width="100px" height="100px" />';
+                                echo '<img src="data:image/jpg;base64,' . base64_encode( $info['image'] ) . '" width="100px" height="100px" />';
                                 ?>
                             
                             </td>
                         </tr>
                     </table>
+                    <?php 
+                        }
+                     ?>
                 </div>
             </div>
             <br>
