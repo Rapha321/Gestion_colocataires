@@ -96,13 +96,21 @@
         <!-- FILTRE -->
         <br>
             <form class="form-filtre" method="POST" action="">
+
+                <?php 
+                    $select = $bdd->query("SELECT * FROM locations");
+                    $loc = $select->fetchAll(PDO::FETCH_ASSOC);
+                ?>
+
                 <div class="filtre">
                     <span>
                         &nbsp;&nbsp;&nbsp;
                         Ville :
                         <select name="ville" id="" class="form-select">
                             <option value="neutre">Neutre</option>
-                            <option value="montreal">Montreal</option>
+                            <?php foreach ($loc as $location) { ?>
+                                <option value="<?php $location['ville']?>" > <?php echo $location['ville'] ?></option>
+                            <?php } ?>
                         </select>
                     </span>
                     <span>
@@ -110,7 +118,9 @@
                         Type de logement:
                         <select name="types" id="">
                             <option value="neutre">Neutre</option>
-                            <option value="studio">Studio</option>
+                            <?php foreach ($loc as $location) { ?>
+                                <option value="<?php $location['types']?>" > <?php echo $location['types'] ?></option>
+                            <?php } ?>
                         </select>
                     </span>
                     <span>
@@ -118,18 +128,22 @@
                         Grandeur :
                         <select name="grandeur" id="">
                             <option value="neutre">Neutre</option>
-                            <option value="">1 1/2</option>
+                            <?php foreach ($loc as $location) { ?>
+                                <option value="<?php $location['grandeur']?>" > <?php echo $location['grandeur'] ?></option>
+                            <?php } ?>
+
                         </select>
                     </span>
                     <span>
                         &nbsp;&nbsp;&nbsp;
-                        Prix :
-                        <select name="prix" id="">
-                            <option value="neutre">Neutre</option>
-                            <option value="">700</option>
-                        </select>
+                        Prix Min:
+                        <input type="text" value="0" name="prixMin" size="5">
+                        &nbsp;&nbsp;&nbsp;
+                        Prix Max:
+                        <input type="text" value="5000" name="prixMax" size="5">
                         &nbsp;&nbsp;&nbsp;
                     </span>
+
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Recherche</button>
                 </div>
             </form>
