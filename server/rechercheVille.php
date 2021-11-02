@@ -12,7 +12,6 @@
         $select = $bdd->prepare("SELECT * FROM locations WHERE ville = '{$ville}'");
     }
 
-      
     $select->execute();
     while ($info = $select->fetch())
     {

@@ -24,6 +24,14 @@
             padding-top: 5%;
         }
 
+        /* .descr-profile {
+            width: 300px;
+        } */
+
+        .table-profile {
+            width: 400px;
+        }
+
         #btn {
             width: 350px;
             height: 35px;
@@ -87,6 +95,10 @@
             font-weight: bold;
         }
 
+        td, th {
+            vertical-align:top;
+        }
+
     </style>
 
 </head>
@@ -113,17 +125,17 @@
                 </figure>
                 <div>
                     <table class="table-profile">
-                        <tr>
+                        <tr >
                             <th>Nom </th>
                             <td>&nbsp; : &nbsp;</td>
                             <td><?php echo $info['nom']?></td>
                         </tr>
-                        <tr>
+                        <tr align="top">
                             <th>Prenom </th>
                             <td>&nbsp; : &nbsp;</td>
                             <td><?php echo $info['prenom']?></td>
                         </tr>
-                        <tr>
+                        <tr class="descr-profile" align="top">
                             <th>Description </th>
                             <td>&nbsp; : &nbsp;</td>
                             <td><?php echo $info['descriptions']?></td>

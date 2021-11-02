@@ -1,6 +1,10 @@
 <?php 
     session_start(); 
     include('Configuration.php');
+
+    
+    $result2 = $bdd->query("SELECT * FROM locations"); 
+
 ?>
 
 <!DOCTYPE html>
@@ -9,6 +13,8 @@
 <head>
     <title>Recherche Location</title>
     <meta name="viewport" content= "width=device-width, initial-scale=1.0 shrink-to-fit=no">
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
     <!-- FONT AWESOME -->
     <script src="https://kit.fontawesome.com/1183c3861a.js" crossorigin="anonymous"></script>
@@ -19,10 +25,10 @@
     <!-- AJAX -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
+    
     <script>
 
         window.load=$( document ).ready(function() {
-            
             $.ajax({
                 type:'POST',
                 url:'afficherTousLocation.php',
@@ -30,7 +36,6 @@
                     $("#table-body").html(html);
                 }
             }); 
-                
         }); 
 
         function selectVille() {
@@ -43,6 +48,7 @@
                     $("#table-body").html(data);
                 }
             });
+
         }
 
         function selectTypes() {
@@ -95,12 +101,16 @@
 
     </script>
 
+
+
     <style>
         .table-favori {
-            width: 100%;
+            width: 90%;
             display: flex;
             justify-content: center;
             margin: auto;
+            min-width: 90%;
+            max-width: 90%;
         }
 
         .container2 {
@@ -110,24 +120,28 @@
             margin: auto;
         }
 
-        .map {
+        #googlemap {
             width: 50%;
+            height: 700px;
+            max-height: 700px;
         }
 
         #container1 {
             width: 55%;
             margin-left: 1%;
             scroll-behavior: auto;
+            max-height: 70%;
         }
 
         .jumbotron {
             height: 100%;
             overflow-y: scroll;
+            height: 700px;
+            max-height: 700px;
         }
 
         .form-filtre {
-            margin: 0 auto;
-            width: 80%;
+            width: 100%;
             height: 40px;
             background-color: bisque;
         }
@@ -154,7 +168,7 @@
         }
 
         .td2 {
-            width: 300px;
+            width: 100%;
             padding-left: 5px;
             padding-right: 5px;
         }
@@ -163,11 +177,15 @@
             font-weight: bold;
         }
 
+        .retourProfile {
+            float: right;
+        }
+
     </style>
 
 </head>
 
-<body>
+<body onload="initMap()">
 
     <!-- FILTRE -->
     <div>
@@ -178,7 +196,7 @@
                     <span>
                         &nbsp;&nbsp;&nbsp;
                         Ville :
-                        <select name="ville" id="ville" onchange="selectVille()">
+                        <select name="ville" id="ville" onchange="selectVille()" >
                             <option value="neutre">Neutre</option>
                             <?php 
                                 $ville = $bdd->query("SELECT DISTINCT ville FROM locations");
@@ -229,61 +247,22 @@
                     </span>
 
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Recherche</button>
+                    &nbsp;&nbsp;&nbsp;
+                    <a href="profileLocataire.php" class="retourProfile"><input type="button" value="Retour au profile" class="btn btn-info"></a>
                 </div>
             </form>
+
+            
     </div>
 
     <br>
 
     <!-- MAP -->
     <div class=" container2">
-        <div class="map">
+        <div id="googlemap">
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6_F1Aun0kO7VU6E06DEMMd_R_UseEVgg" async></script>
 
-            <script>
-                let selectedLocation = document.getElementById("ville").value;
-            </script>
-
-             <?php
-                $selectedLocation = 'Montreal';
-
-                if (isset($_POST["submit_address"]))
-                {
-                    $address = $_POST["address"];
-                    $address = str_replace("", "+", $address);
-                    ?>
-                    <iframe title="map" width="100%" height="500" src="https://maps.google.com/maps?q=<?php echo 'selectedLocation'; ?>&output=embed"></iframe>
-
-            <?php 
-                }
-                if (isset($_POST['submit_coordinates'])) 
-                {
-                    $lat = $_POST['lat'];
-                    $long = $_POST['long']
-            ?>
-                <iframe title="map" src="https://maps.google.com/maps?q=<?php echo $latitide; ?><?php echo $longitude; ?>&output=embed"" width="70%" height="500" ></iframe>
-            <?php
-                }
-            ?>
-
-            <form method="POST" action="">
-                <p>
-                    <input type="text" name="address">
-                </p>
-                <input type="submit" name="submit_address">
-            </form>
-
-            <form method="POST" action="">
-                <p>
-                    <input type="text" name="lat" placeholder="Enter latitude">
-                </p>
-                <p>
-                    <input type="text" name="long" placeholder="Enterl longitude">
-                </p>
-                <input type="submit" name="submit_coordinates">
-
-            </form>
         </div>
-
 
         <!-- RESULTAT -->
         <div id="container1">
@@ -291,19 +270,85 @@
 
                 <table class="table-favori">
                     <tbody id="table-body">
-                  
+                    
                     </tbody>
                 </table>
 
             </div>
-            <br>
+
+            
+            
         </div>
 
     </div>
 
 </body>
 
+<script type='text/javascript'>
+        function initMap() {
+            var map;
+            var bounds = new google.maps.LatLngBounds();
+            var mapOptions = {
+                mapTypeId: 'roadmap'
+            };
+                            
+            // Display a map on the web page
+            map = new google.maps.Map(document.getElementById("googlemap"), mapOptions);
+            map.setTilt(100);
 
+            // Multiple Markers
+            var markers = [
+                <?php 
+                    $result1 = $bdd->query("SELECT * FROM locations "); 
+                    while ($row1 = $result1->fetch()) {
+                        echo "['$row1[types]', $row1[montant_loyer], $row1[latitude], $row1[longitude]],";
+                    }
+                ?>
+            ];
 
+            // Info Window Content
+            var infoWindowContent = [
+                // [
+                // '<h3>Joe Brown Park</h3>' +
+                // 'Named after 1 of the states largest independent oil producers, this park offers year-round events.' +
+                // '</div>'
+                // ],
+                // [
+                // '<h3>City Park </h3>' +
+                // 'A 1,300 acre public park in New Orleans, Louisiana, is the 87th largest and 7th-most-visited urban public park in the United States.' +
+                // '</div>'
+                // ],
+            ];
+
+            // Display multiple markers on a map
+            var infoWindow = new google.maps.InfoWindow(), marker, i;
+
+            // Loop through our array of markers & place each one on the map  
+            for (i = 0; i < markers.length; i++) {
+                var position = new google.maps.LatLng(
+                markers[i][2],
+                markers[i][3]);
+                bounds.extend(position);
+                var label = String.fromCharCode(65 + i);
+                marker = new google.maps.Marker({
+                position: position,
+                map: map,
+                title: markers[i][0],
+                label: label
+                });
+
+                // Allow each marker to have an info window    
+                google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                return function() {
+                    infoWindow.setContent(infoWindowContent[i][0]);
+                    infoWindow.open(map, marker);
+                }
+                })(marker, i));
+            }
+            map.fitBounds(bounds)
+                
+        }
+
+    </script>
 
 </html>
