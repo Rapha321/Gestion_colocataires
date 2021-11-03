@@ -1,7 +1,7 @@
 <?php 
     session_start(); 
     include('Configuration.php');
-
+    
     
     $result2 = $bdd->query("SELECT * FROM locations"); 
 
@@ -260,7 +260,7 @@
     <!-- MAP -->
     <div class=" container2">
         <div id="googlemap">
-            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6_F1Aun0kO7VU6E06DEMMd_R_UseEVgg" async></script>
+            <script src=<?php include('key.php'); ?> async></script>
 
         </div>
 

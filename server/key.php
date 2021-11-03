@@ -1,3 +1,1 @@
-key {
-    key: "AIzaSyC6_F1Aun0kO7VU6E06DEMMd_R_UseEVgg"
-}
+"https://maps.googleapis.com/maps/api/js?key=AIzaSyC6_F1Aun0kO7VU6E06DEMMd_R_UseEVgg"
