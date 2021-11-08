@@ -53,7 +53,8 @@
                         <td>Photo :</td>
                         <td>
                             <div class="input-group mb-3">
-                                <input type="file" class="form-control" id="inputGroupFile02" name="pic_N">
+                                <input type="file" class="form-control" id="inputGroupFile02" name="pic_N" value="<?php $_SESSION['donnees']['pic']?>">
+                    
                             </div>
                         </td>
                     </tr>

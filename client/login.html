@@ -9,56 +9,106 @@
 
     <!-- BOOTSTRAP -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <style>
+        .connection {
+            margin-top: 15%;
+        }
+        
+        .login {
+            display: flex;
+            justify-content: center;
+            margin: auto;
+        }
+        
+        .login1 {
+            width: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .login2 {
+            width: auto;
+            display: flex;
+            flex-direction: row;
+        }
+        
+        .maison {
+            opacity: 0.8;
+        }
+        
+        .luggage {
+            opacity: 0.8;
+            margin: 10% auto;
+        }
+    </style>
 </head>
 
 <body>
 
     <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
-        <h3>locataire</h3>
+        <h3>location-A-tous</h3>
     </nav>
 
+
     <form method="POST" action="../server/validerLogin.php">
+        <div class="login">
+            <div class="login2">
+                <div class="login1">
+                    <div class="connection">
+                        <h2>Connexion</h2>
+                        <br>
+                        <table class="table-login">
+                            <tr>
+                                <td>Email :</td>
+                                <td><input type="text" size="30" class="textbox1" name="email"></td>
+                            </tr>
+                            <tr>
+                                <td>Mot de passe :&nbsp;</td>
+                                <td><input type="password" size="30" class="textbox1" name="password"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td>Je suis un </td>
+                                <td>
+                                    <select name="jeSuisUn">
+                                    <option value="locataire">Locataire</option>
+                                    <option value="proprietaire">Proprietaire</option>
+                                </select>
 
-        <div class="jumbotron">
-            <h2>Connexion</h2>
-            <br>
-            <table class="table-login">
-                <tr>
-                    <td>Email :</td>
-                    <td><input type="text" size="30" class="textbox1" name="email"></td>
-                </tr>
-                <tr>
-                    <td>Mot de passe :&nbsp;</td>
-                    <td><input type="password" size="30" class="textbox1" name="password"></td>
-                </tr>
-                <tr>
-                    <td colspan="2">&nbsp;</td>
-                </tr>
-                <tr>
-                    <td>Je suis un </td>
-                    <td>
-                        <select name="jeSuisUn">
-                        <option value="locataire">Locataire</option>
-                        <option value="proprietaire">Proprietaire</option>
-                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="erreur">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td align="center">
+                                    <input type="submit" value="Connecter" class="btn btn-success">
+                                </td>
+                            </tr>
+                        </table>
+                        <br>
+                        <p>Vous n'avez pas un compte? Inscrivez-vous <a href="register.html">ici</a> </p>
+                    </div>
 
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2" class="erreur">&nbsp;</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td align="center">
-                        <input type="submit" value="Connecter" class="btn btn-success">
-                    </td>
-                </tr>
-            </table>
-            <br>
-            <p>Vous n'avez pas un compte? Inscrivez-vous <a href="register.html">ici</a> </p>
+                    <div>
+                        <img class="luggage" src="../images/image_login_luggage.jpg" alt="">
+                    </div>
+
+                </div>
+
+                <div>
+                    <img class="maison" src="../images/image_login_maison.jpg" alt="">
+                </div>
+
+            </div>
         </div>
-
     </form>
+
+
 
 </body>
 

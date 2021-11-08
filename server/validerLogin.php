@@ -1,5 +1,5 @@
 <?php
-
+session_start();
     include('Configuration.php');
 
     $jeSuisUn = $_POST['jeSuisUn'];
@@ -9,13 +9,16 @@
     {
         if ($jeSuisUn == "locataire") 
         {
-            $select = $bdd->query('SELECT * FROM locataire');
+            $select = $bdd->prepare('SELECT * FROM locataire');
         }
         else
         {
-            $select = $bdd->query('SELECT * FROM proprietaire');
+            $select = $bdd->prepare('SELECT * FROM proprietaire');
         }
-        
+
+        $select->execute();
+
+              
         while($donnees = $select->fetch())
         {
             if ($_POST['email'] == $donnees['email'] && $_POST['password'] == $donnees['pwd']) 

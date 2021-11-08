@@ -187,6 +187,10 @@
 
 <body onload="initMap()">
 
+    <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+        <h3>location-A-tous</h3>
+    </nav>
+
     <!-- FILTRE -->
     <div>
         <br>

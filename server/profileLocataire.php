@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <style>
-        body {
+        .page {
             display: flex;
             justify-content: center;
             flex-direction: row;
@@ -103,15 +103,22 @@
 
 </head>
 
+
 <body>
 
     <?php
+        
         $id = $_SESSION['donnees']['id_locataire'];
         $select = $bdd->prepare("SELECT * FROM locataire where id_locataire=?");
         $select->execute([$id]);
         $info = $select->fetch();
     ?>
+
+    <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+        <h3>location-A-tous</h3>
+    </nav>
     
+    <div class="page">
     <form method="POST" action="modifierProfileLocataire.php">
         <div class="main">
 
@@ -120,7 +127,7 @@
 
                 <figure>
                     <?php 
-                        echo '<img src="data:image/jpg;base64,' . base64_encode( $_SESSION['donnees']['pic'] ) . '"width="290px" height="280px" class="img-thumbnail"/>';
+                        echo '<img src="data:image/jpg;base64,' . base64_encode( $info['pic'] ) . '"width="290px" height="280px" />';
                     ?>
                 </figure>
                 <div>
@@ -168,7 +175,7 @@
                             </td>
                             <td>
                                 <?php 
-                                echo '<img src="data:image/jpg;base64,' . base64_encode( $_SESSION['donnees']['pic'] ) . '" width="100px" height="100px" />';
+                                echo '<img src="data:image/jpg;base64,' . base64_encode( $info['pic'] ) . '" width="100px" height="100px" />';
                                 ?>
                             
                             </td>
@@ -180,6 +187,8 @@
             
             <a href="rechercheLocation.php"> <input id="btn-Chercher" type="submit" value="Chercher un location" class="btn btn-primary"> </a>
         </div>
+    </div>
+  
    
 </body>
 
