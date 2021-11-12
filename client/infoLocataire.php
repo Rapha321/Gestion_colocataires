@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Information additionnel - Proprietaire</title>
+    <title>location-A-tous</title>
 
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="../styles/style.css">
@@ -13,11 +13,15 @@
 
 <body>
 
-    <h1>Felicitation! </h1>
+    <?php include('../server/header.php'); ?>
+
+    
+
+    <h1>Bienvenue! </h1>
 
     <h4>Veuillez saisir les information suivantes:</h4>
 
-    <form method="POST" action="../server/validerInfoProprietaire.php" class="jumbotron">
+    <form enctype="multipart/form-data" method="POST" action="../server/validerInfoLocataire.php" class="jumbotron" data-ajax='false' >
 
         <table>
             <tr>

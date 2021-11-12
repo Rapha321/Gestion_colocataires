@@ -3,21 +3,18 @@
     session_start ();
     include('Configuration.php');
 
-    $id = $_GET['id_L'];
+    $id = $_SESSION['id'];
     $nom = $_POST['nom_N'];
     $prenom = $_POST['prenom_N'];
     $descr = $_POST['descr_N'];
     // $pic = $_FILES['pic_N'];
 
-    // $_SESSION['nom'] = $nom;
-    // $_SESSION['prenom'] = $prenom;
-    // $_SESSION['descr'] = $descr;
 
     if (isset($nom) && isset($prenom) && isset($descr))
     {
-        $update = $bdd->prepare("UPDATE locataire 
-                                 INNER JOIN (SELECT id FROM locataire WHERE id=:id) b 
-                                                ON locataire.id = b.id 
+        $update = $bdd->prepare("UPDATE proprietaire 
+                                 INNER JOIN (SELECT id AS id FROM proprietaire WHERE id=:id) b 
+                                                ON proprietaire.id = b.id 
                                  SET nom = :nom, 
                                      prenom = :prenom,
                                      descriptions = :descr;");
@@ -28,7 +25,7 @@
             ':prenom' => $prenom,
             ':descr' => $descr
         ))) {
-            header("location:profileLocataire.php");
+            header("location:profileProprietaire.php");
         }
 
   
@@ -57,7 +54,7 @@
             <div class="jumbotron">
                 <h5>Erreur: Veuillez saisir toutes les informations!</h5>
                 <br>
-                <a href="modifierProfileLocataire.php"><input type="button" value="Retour" class="btn btn-warning"> </a>
+                <a href="modifierProfileProprietaire.php"><input type="button" value="Retour" class="btn btn-warning"> </a>
             </div>
 
         </body>

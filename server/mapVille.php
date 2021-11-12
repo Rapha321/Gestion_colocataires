@@ -17,7 +17,7 @@
                     $ville = trim($ville);
                     $result1 = $bdd->query("SELECT * FROM locations "); 
                     while ($row1 = $result1->fetch()) {
-                        echo "['$row1[types]', $row1[montant_loyer], $row1[latitude], $row1[longitude]],";
+                        echo "['$row1[types]', $row1[montantloyer], $row1[latitude], $row1[longitude]],";
                     }
                 ?>
             ];

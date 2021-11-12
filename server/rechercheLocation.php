@@ -26,7 +26,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
     
-    <script>
+    <script type='text/javascript'>
 
         window.load=$( document ).ready(function() {
             $.ajax({
@@ -37,6 +37,8 @@
                 }
             }); 
         }); 
+
+        var ville;
 
         function selectVille() {
             var x = document.getElementById("ville").value;
@@ -99,6 +101,74 @@
             });
         }
 
+        function initMap() {
+            var map;
+            var bounds = new google.maps.LatLngBounds();
+            var mapOptions = {
+                mapTypeId: 'roadmap'
+            };
+                            
+            // Display a map on the web page
+            map = new google.maps.Map(document.getElementById("googlemap"), mapOptions);
+            map.setTilt(100);
+
+
+
+            // Multiple Markers
+            var markers = [
+                <?php 
+                $result1 = $bdd->query("SELECT * FROM locations"); 
+                while ($row1 = $result1->fetch()) {
+                    echo "['$row1[types]', $row1[montantloyer], $row1[latitude], $row1[longitude]],";
+                }
+                ?>
+            ];
+
+            
+
+            // Info Window Content
+            var infoWindowContent = [
+                // [
+                // '<h3>Joe Brown Park</h3>' +
+                // 'Named after 1 of the states largest independent oil producers, this park offers year-round events.' +
+                // '</div>'
+                // ],
+                // [
+                // '<h3>City Park </h3>' +
+                // 'A 1,300 acre public park in New Orleans, Louisiana, is the 87th largest and 7th-most-visited urban public park in the United States.' +
+                // '</div>'
+                // ],
+            ];
+
+            // Display multiple markers on a map
+            var infoWindow = new google.maps.InfoWindow(), marker, i;
+
+            // Loop through our array of markers & place each one on the map  
+            for (i = 0; i < markers.length; i++) {
+                var position = new google.maps.LatLng(
+                markers[i][2],
+                markers[i][3]);
+                bounds.extend(position);
+                var label = String.fromCharCode(65 + i);
+                marker = new google.maps.Marker({
+                position: position,
+                map: map,
+                title: markers[i][0],
+                label: label
+                });
+
+                // Allow each marker to have an info window    
+                google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                return function() {
+                    infoWindow.setContent(infoWindowContent[i][0]);
+                    infoWindow.open(map, marker);
+                }
+                })(marker, i));
+            }
+            map.fitBounds(bounds)
+                
+        }
+
     </script>
 
 
@@ -152,6 +222,10 @@
             align-items: center;
         }
 
+        .grandeur {
+            font-weight: bold;
+        }
+
         .type {
             font-weight: bold;
         }
@@ -169,8 +243,6 @@
 
         .td2 {
             width: 100%;
-            padding-left: 5px;
-            padding-right: 5px;
         }
 
         .ville {
@@ -181,82 +253,104 @@
             float: right;
         }
 
+        hr {
+            margin-top: 3px;
+        }
+
+        td {
+            padding-right: 5px;
+        }
+
+        #btn-heart {
+            height: 30px;
+            width: 30px;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 5px;
+        }
+
+        #btn-star {
+            height: 30px;
+            width: 30px;
+            display: flex;
+            justify-content: center;
+        }
+
+
     </style>
 
 </head>
 
 <body onload="initMap()">
 
-    <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
-        <h3>location-A-tous</h3>
-    </nav>
+    <?php 
+        include('header.php');
+    ?>
 
     <!-- FILTRE -->
     <div>
         <br>
-            <form class="form-filtre" method="POST" action="">
+        <form class="form-filtre" method="POST" action="">
 
-                <div class="filtre">
-                    <span>
-                        &nbsp;&nbsp;&nbsp;
-                        Ville :
-                        <select name="ville" id="ville" onchange="selectVille()" >
-                            <option value="neutre">Neutre</option>
-                            <?php 
-                                $ville = $bdd->query("SELECT DISTINCT ville FROM locations");
-                                $v = $ville->fetchAll(PDO::FETCH_ASSOC);
-                                foreach ($v as $ville) { 
-                            ?>
-                                <option value="<?php echo $ville['ville'];?>" > <?php echo $ville['ville'] ?></option>
-                            <?php } ?>
-                        </select>
-                    </span>
-                    <span>
-                        &nbsp;&nbsp;&nbsp;
-                        Type de logement:
-                        <select name="types" id="types" onchange="selectTypes()">
-                            <option value="neutre">Neutre</option>
-                            <?php 
-                                $types = $bdd->query("SELECT DISTINCT types FROM locations");
-                                $t = $types->fetchAll(PDO::FETCH_ASSOC);
-                                foreach ($t as $types) { 
-                                ?>
-                                <option value="<?php echo $types['types'];?>" > <?php echo $types['types'] ?></option>
-                            <?php } ?>
-                        </select>
-                    </span>
-                    <span>
-                        &nbsp;&nbsp;&nbsp;
-                        Grandeur :
-                        <select name="grandeur" id="grandeur" onchange="selectGrandeur()">
-                            <option value="neutre">Neutre</option>
-                            <?php 
-                                $grandeur = $bdd->query("SELECT DISTINCT grandeur FROM locations");
-                                $g = $grandeur->fetchAll(PDO::FETCH_ASSOC);
-                                foreach ($g as $grandeur) { 
-                            ?>
-                                <option value="<?php echo $grandeur['grandeur'];?>" > <?php echo $grandeur['grandeur'] ?></option>
-                            <?php } ?>
-
-                        </select>
-                    </span>
-                    <span>
-                        &nbsp;&nbsp;&nbsp;
-                        Prix Min:
-                        <input type="text" value="" name="prixMin" id="prixMin" size="3" onchange="selectPrixMin()" placeholder="0">$
-                        &nbsp;&nbsp;&nbsp;
-                        Prix Max:
-                        <input type="text" value="" name="prixMax" id="prixMax" onchange="selectPrixMax()" size="3" placeholder="5000">$
-                        &nbsp;&nbsp;&nbsp;
-                    </span>
-
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Recherche</button>
+            <div class="filtre">
+                <span>
                     &nbsp;&nbsp;&nbsp;
-                    <a href="profileLocataire.php" class="retourProfile"><input type="button" value="Retour au profile" class="btn btn-info"></a>
-                </div>
-            </form>
+                    Ville :
+                    <select name="ville" id="ville" onchange="selectVille()" >
+                        <option value="neutre">Neutre</option>
+                        <?php 
+                            $ville = $bdd->query("SELECT DISTINCT ville FROM locations");
+                            $v = $ville->fetchAll(PDO::FETCH_ASSOC);
+                            foreach ($v as $ville) { 
+                        ?>
+                            <option value="<?php echo $ville['ville'];?>" > <?php echo $ville['ville'] ?></option>
+                        <?php } ?>
+                    </select>
+                </span>
+                <span>
+                    &nbsp;&nbsp;&nbsp;
+                    Type de logement:
+                    <select name="types" id="types" onchange="selectTypes()">
+                        <option value="neutre">Neutre</option>
+                        <?php 
+                            $types = $bdd->query("SELECT DISTINCT types FROM locations");
+                            $t = $types->fetchAll(PDO::FETCH_ASSOC);
+                            foreach ($t as $types) { 
+                            ?>
+                            <option value="<?php echo $types['types'];?>" > <?php echo $types['types'] ?></option>
+                        <?php } ?>
+                    </select>
+                </span>
+                <span>
+                    &nbsp;&nbsp;&nbsp;
+                    Grandeur :
+                    <select name="grandeur" id="grandeur" onchange="selectGrandeur()">
+                        <option value="neutre">Neutre</option>
+                        <?php 
+                            $grandeur = $bdd->query("SELECT DISTINCT grandeur FROM locations");
+                            $g = $grandeur->fetchAll(PDO::FETCH_ASSOC);
+                            foreach ($g as $grandeur) { 
+                        ?>
+                            <option value="<?php echo $grandeur['grandeur'];?>" > <?php echo $grandeur['grandeur'] ?></option>
+                        <?php } ?>
 
-            
+                    </select>
+                </span>
+                <span>
+                    &nbsp;&nbsp;&nbsp;
+                    Prix Min:
+                    <input type="text" value="" name="prixMin" id="prixMin" size="3" onchange="selectPrixMin()" placeholder="0">$
+                    &nbsp;&nbsp;&nbsp;
+                    Prix Max:
+                    <input type="text" value="" name="prixMax" id="prixMax" onchange="selectPrixMax()" size="3" placeholder="5000">$
+                    &nbsp;&nbsp;&nbsp;
+                </span>
+
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Recherche</button>
+                &nbsp;&nbsp;&nbsp;
+                <a href="profileLocataire.php" class="retourProfile"><input type="button" value="Retour au profile" class="btn btn-info"></a>
+            </div>
+        </form>
     </div>
 
     <br>
@@ -265,93 +359,25 @@
     <div class=" container2">
         <div id="googlemap">
             <script src=<?php include('key.php'); ?> async></script>
-
         </div>
 
         <!-- RESULTAT -->
         <div id="container1">
             <div class="jumbotron" >
-
                 <table class="table-favori">
                     <tbody id="table-body">
-                    
+
                     </tbody>
                 </table>
-
             </div>
-
-            
-            
         </div>
 
     </div>
 
 </body>
 
-<script type='text/javascript'>
-        function initMap() {
-            var map;
-            var bounds = new google.maps.LatLngBounds();
-            var mapOptions = {
-                mapTypeId: 'roadmap'
-            };
-                            
-            // Display a map on the web page
-            map = new google.maps.Map(document.getElementById("googlemap"), mapOptions);
-            map.setTilt(100);
-
-            // Multiple Markers
-            var markers = [
-                <?php 
-                    $result1 = $bdd->query("SELECT * FROM locations "); 
-                    while ($row1 = $result1->fetch()) {
-                        echo "['$row1[types]', $row1[montant_loyer], $row1[latitude], $row1[longitude]],";
-                    }
-                ?>
-            ];
-
-            // Info Window Content
-            var infoWindowContent = [
-                // [
-                // '<h3>Joe Brown Park</h3>' +
-                // 'Named after 1 of the states largest independent oil producers, this park offers year-round events.' +
-                // '</div>'
-                // ],
-                // [
-                // '<h3>City Park </h3>' +
-                // 'A 1,300 acre public park in New Orleans, Louisiana, is the 87th largest and 7th-most-visited urban public park in the United States.' +
-                // '</div>'
-                // ],
-            ];
-
-            // Display multiple markers on a map
-            var infoWindow = new google.maps.InfoWindow(), marker, i;
-
-            // Loop through our array of markers & place each one on the map  
-            for (i = 0; i < markers.length; i++) {
-                var position = new google.maps.LatLng(
-                markers[i][2],
-                markers[i][3]);
-                bounds.extend(position);
-                var label = String.fromCharCode(65 + i);
-                marker = new google.maps.Marker({
-                position: position,
-                map: map,
-                title: markers[i][0],
-                label: label
-                });
-
-                // Allow each marker to have an info window    
-                google.maps.event.addListener(marker, 'click', (function(marker, i) {
-                return function() {
-                    infoWindow.setContent(infoWindowContent[i][0]);
-                    infoWindow.open(map, marker);
-                }
-                })(marker, i));
-            }
-            map.fitBounds(bounds)
-                
-        }
+<script >
+       
 
     </script>
 

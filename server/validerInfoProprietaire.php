@@ -5,15 +5,41 @@
     $nom = $_POST['nom'];
     $prenom = $_POST['prenom'];
     $descr = $_POST['description'];
-    $pic = $_POST['pic'];
+    
+
+    $upload_status = FALSE;
+    if(isset($_FILES['pic']))
+    {
+        echo 'picture set <br>';
+    }
+    else
+    {
+        echo 'picture not set <br>';
+    }
+
+    if (isset($_FILES['pic']) && file_exists($_FILES['pic']['tmp_name']))
+    {
+        $image = $_FILES['pic']['tmp_name'];
+
+        //~ Check if image is an image
+        if (@getimagesize($image))
+        {
+            $upload_status = TRUE;
+            $name = $_FILES['pic']['name'];
+            move_uploaded_file($image, "../images/$name");
+        }
+    }
+
+    $pic=basename( $_FILES["pic"]["name"],".jpg");
+
 
     $req = $bdd->prepare("UPDATE proprietaire 
-                          INNER JOIN (SELECT MAX(id_proprietaire) AS maxId FROM proprietaire) b 
-                          ON proprietaire.id_proprietaire = b.maxId 
+                          INNER JOIN (SELECT MAX(id) AS maxId FROM proprietaire) b 
+                          ON proprietaire.id = b.maxId 
                           SET nom=:nom,
                               prenom = :prenom,
                               descriptions = :descr,
-                              pic = :pic ;");
+                              pic = :pic");
 
     $req->execute(array(
         ':nom' => $nom,
@@ -22,7 +48,7 @@
         ':pic' => $pic
     ));
 
-    header("location:profileLocataire.php");
+    header("location:profileProprietaire.php");
 
     $req->closeCursor();
 

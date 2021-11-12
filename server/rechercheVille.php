@@ -8,28 +8,36 @@
 
     if ($ville == "neutre") {
         header("location:afficherTousLocation.php");
-    } else {
-        $select = $bdd->prepare("SELECT * FROM locations WHERE ville = '{$ville}'");
     }
-
+    
+    $select = $bdd->prepare("SELECT * FROM locations WHERE ville = '$ville'");
     $select->execute();
-    while ($info = $select->fetch())
-    {
+
+    while ($info = $select->fetch()) {
+
 ?>
 
+
     <tr>
-        <td>&nbsp;&nbsp; <i class="far fa-heart"></i>&nbsp;&nbsp;</td>
+        <td>
+            <a href="ajouterFavori.php?id_L=<?php echo $info['id_location'] ?>"> <button id="btn-heart" class="btn btn-info"><i class="far fa-heart"></i></button> </a> 
+            <button id="btn-star" class="btn btn-warning"><i class="fas fa-star"></i></button>
+        </td>
         <td class="img">
             <?php 
-                echo '<img src="data:image/jpg;base64,' . base64_encode( $info['image'] ) . '" width="100px" height="100px" />';
+                echo '<img src="data:image/jpg;base64,' . base64_encode( $info['pic'] ) . '" width="100px" height="100px" />';
             ?>
         </td>  
         <td class="td2">
-            <span class="type"> <?php echo $info['types']; ?> </span> à 
-            <span class="ville"> <?php echo $info['ville']; ?> </span>
-            <span class="prix"> $<?php echo $info['montant_loyer']; ?> </span>
+            <div class="top-section">
+                <span class="type"> <?php echo $info['types']; ?> </span> &nbsp; | &nbsp; 
+                <span class="grandeur"> <?php echo $info['grandeur']; ?> </span> &nbsp; | &nbsp;
+                <span class="ville"> <?php echo $info['ville']; ?> </span>
+                <span class="prix"> $<?php echo $info['montantloyer']; ?> </span>
+            </div>
+           
             <hr>
-            <span class="descr-favori"> <?php echo $info['description']; ?> </span>
+            <span class="descr-favori"> <?php echo $info['descriptions']; ?> </span>
         </td>
     </tr>
     <tr>
@@ -37,6 +45,8 @@
     </tr>
    
 <?php
+   
     }
+    $select->closeCursor();
 ?>
 

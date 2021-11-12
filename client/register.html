@@ -2,20 +2,41 @@
 <html>
 
 <head>
-    <title>Enregistrer</title>
+    <title>location-A-tous</title>
 
     <!-- CSS -->
-    <link rel="stylesheet" type="text/css" href="../styles/style.css">
+    <!-- <link rel="stylesheet" type="text/css" href="../styles/style.css"> -->
 
     <!-- BOOTSTRAP -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+    <style>
+        .jumbotron {
+            margin: 0 auto;
+            width: 40vw;
+            padding-left: 10%;
+            opacity: 0.9;
+        }
+        /* body {
+            background: url("../images/background.jpeg");
+            background-size: cover;
+            background-repeat: no-repeat;
+        } */
+        
+        .textbox1 {
+            border-radius: 5px;
+        }
+    </style>
+
 </head>
 
 <body>
 
     <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
-        <h3>locataire</h3>
+        <h3>location-A-tous</h3>
     </nav>
+    <br><br>
 
     <form method="POST" action="../server/validerRegister.php">
 
@@ -55,7 +76,7 @@
                 </tr>
             </table>
             <br>
-            <p>Vous avez deja un compte! Connectez-vous <a href="login.html">ici</a> </p>
+            <p>Vous avez deja un compte! Connectez-vous <a href="login.html"><strong>ici</strong></a> </p>
         </div>
 
     </form>

@@ -1,15 +1,13 @@
 <?php 
     session_start (); 
-    include('header.php');
     include('Configuration.php');
-
 ?>
 
 <!DOCTYPE html>
 <html>
 
 <head>
-    <title>Formulaire de modification</title>
+    <title>location-A-tous</title>
     <meta name="viewport" content= "width=device-width, initial-scale=1.0">
 
     <!-- FONT AWESOME -->
@@ -35,18 +33,20 @@
 
 <body>
 
-    <form method="POST" action="validerModifProfileLocataire.php?id_L=<?php echo $_GET['id_L'] ?>">
-
     <?php 
-        $id = $_GET['id_L'];
-        $req = $bdd->prepare('SELECT * FROM locataire WHERE id = ?');
-        $req->execute([$id]);
-        $info = $req->fetch();
+        include('header.php');
+
+        $id = $_SESSION['id'];
+        $select = $bdd->prepare("SELECT * FROM proprietaire where id=?");
+        $select->execute([$id]);
+        $info = $select->fetch();
     ?>
+
+    <form method="POST" action="validerModifProfileProprietaire.php">
 
         <div class="jumbotron">
             <div class="container1">
-                <h3>location-A-tous</h3>
+                <h3>Formulaire de modification:</h3>
                 <br>
                 <table>
                     <tr>
@@ -63,17 +63,13 @@
                     </tr>
                     <tr>
                         <td></td>
-                        <td>
-                            <!-- <div class="input-group mb-3">
-                                <input type="file" class="form-control" id="inputGroupFile02" name="pic_N" >
-                            </div> -->
-                        </td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td></td>
                         <td>
                              <input type="submit" value="Modifier" class="btn btn-info">
-                             <a href="profileLocataire.php"><input type="button" value="Annuler" class="btn btn-secondary"> </a>
+                             <a href="profileProprietaire.php"><input type="button" value="Annuler" class="btn btn-secondary"> </a>
                         </td>
                     </tr>
                 </table>

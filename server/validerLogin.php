@@ -1,5 +1,5 @@
 <?php
-session_start();
+    session_start();
     include('Configuration.php');
 
     $jeSuisUn = $_POST['jeSuisUn'];
@@ -25,16 +25,19 @@ session_start();
             {
                 $_SESSION['email'] = $_POST['email']; 
                 $_SESSION['password'] = $_POST['password']; 
-                $_SESSION['donnees'] = $donnees;
+                $_SESSION['nom'] = $donnees['nom'];
+                $_SESSION['prenom'] = $donnees['prenom'];
+                $_SESSION['descr'] = $donnees['descriptions'];
+                $_SESSION['id'] = $donnees['id'];
                 $validation = true;
 
                 if ($jeSuisUn == "locataire") 
                 {
-                    header("location:profileLocataire.php"); // TO CHANGE
+                    header("location:profileLocataire.php"); 
                 } 
                 else 
                 {
-                    header("location:profileProprietaire.php"); // TO CHANGE
+                    header("location:profileProprietaire.php"); 
                 } 
             } 
         }    

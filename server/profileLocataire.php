@@ -7,7 +7,7 @@
 <html>
 
 <head>
-    <title>template</title>
+    <title>location-A-tous</title>
     <meta name="viewport" content= "width=device-width, initial-scale=1.0">
 
     <!-- FONT AWESOME -->
@@ -15,6 +15,15 @@
 
     <!-- BOOTSTRAP -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+    <!-- jQUERY -->
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+
+    <!-- jtoast Js -->
+    <!-- <script src="jtoast.js"></script> -->
 
     <style>
         .page {
@@ -48,7 +57,7 @@
         }
 
         .div-profile {
-            height: 80%;
+            height: 55vh;
         }
 
         .div-favori {
@@ -78,6 +87,7 @@
             width: 40%;
             margin-left: 3%;
             scroll-behavior: auto;
+            margin-bottom: 5px;
         }
 
         .prix {
@@ -87,8 +97,9 @@
         }
 
         .jumbotron {
-            height: 100%;
             overflow-y: scroll;
+            height: 60vh;
+            max-height: 60vh;
         }
 
         .type {
@@ -97,6 +108,18 @@
 
         td, th {
             vertical-align:top;
+        }
+
+        th {
+            width: 120px;
+        }
+
+        #btn-bin {
+            height: 30px;
+            width: 30px;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 5px;
         }
 
     </style>
@@ -108,43 +131,38 @@
 
     <?php
         
-        $id = $_SESSION['donnees']['id_locataire'];
-        $select = $bdd->prepare("SELECT * FROM locataire where id_locataire=?");
+        $id = $_SESSION['id'];
+        $select = $bdd->prepare("SELECT * FROM locataire where id=?");
         $select->execute([$id]);
         $info = $select->fetch();
+
+        include('header.php');
     ?>
 
-    <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
-        <h3>location-A-tous</h3>
-    </nav>
-    
     <div class="page">
-    <form method="POST" action="modifierProfileLocataire.php">
+    
         <div class="main">
 
 
             <div class="div-profile">
-
+            <form method="POST" action="modifierProfileLocataire.php?id_L=<?php echo $id ?>">
                 <figure>
                     <?php 
-                        echo '<img src="data:image/jpg;base64,' . base64_encode( $info['pic'] ) . '"width="290px" height="280px" />';
+                        echo  '<img src="../images/'.$info['pic'].'" width="290px" height="280px" />';
                     ?>
                 </figure>
                 <div>
                     <table class="table-profile">
                         <tr >
-                            <th>Nom </th>
-                            <td>&nbsp; : &nbsp;</td>
+                            <th>Nom :</th>
                             <td><?php echo $info['nom']?></td>
                         </tr>
-                        <tr align="top">
-                            <th>Prenom </th>
-                            <td>&nbsp; : &nbsp;</td>
+                        <tr>
+                            <th>Prenom :</th>
                             <td><?php echo $info['prenom']?></td>
                         </tr>
-                        <tr class="descr-profile" align="top">
-                            <th>Description </th>
-                            <td>&nbsp; : &nbsp;</td>
+                        <tr class="descr-profile">
+                            <th>Description :</th>
                             <td><?php echo $info['descriptions']?></td>
                         </tr>
                     </table>
@@ -155,37 +173,64 @@
                 <br><br>
                 <hr>
                 <input id="btn" type="submit" value="Modifier profile" class="btn btn-info">
-                <input id="btn" type="button" value="Supprimer profile" class="btn btn-danger">
+        </form>
+                <a href="supprimerProfileLocataire.php?id_L=<?php echo $info['id'] ?>"> 
+                    <button id="btn" class="btn btn-danger">Supprimer</button>
+                </a>
             </div>
         </div>
-    </form>
+   
+
         
         <div id="container1">
             <h4>Mes favori:</h4>
             <div class="div-favori">
                 <div class="jumbotron" >
                     <table class="table-favori">
+
+                        <?php 
+                            $select = $bdd->prepare("SELECT * FROM locations
+                                                     INNER JOIN favori ON locations.id_location = favori.locations
+                                                     WHERE favori.locataire = $id");
+                            $select->execute();
+                            while ($info = $select->fetch())
+                            {
+                        ?>
+
                         <tr>
-                            <td>&nbsp;&nbsp; <i class="fas fa-trash-alt"></i>&nbsp;&nbsp;</td>
+                            <td>
+                                <a href="supprimerFavori.php?id_F=<?php echo $info['id_favori'] ?>">
+                                    <button id="btn-bin" class="btn btn-primary" ><i class="fas fa-trash-alt"></i></button>
+                                </a>
+                            </td>
                             <td class="td2">
-                                <span class="type">Studio</span>
-                                <span class="prix">$700</span>
+                                <div class="top-section">
+                                    <span class="type"> <?php echo $info['types']; ?> </span> &nbsp; | &nbsp; 
+                                    <span class="grandeur"> <?php echo $info['grandeur']; ?> </span> &nbsp; | &nbsp;
+                                    <span class="ville"> <?php echo $info['ville']; ?> </span>
+                                    <span class="prix"> $<?php echo $info['montantloyer']; ?> </span>
+                                </div>
+                            
                                 <hr>
-                                <span class="descr-favori">Studio a louer. Tout inclus. Disponibles immediatements. Meubler!!!</span>
+                                <span class="descr-favori"> <?php echo $info['descriptions']; ?> </span>
                             </td>
                             <td>
                                 <?php 
                                 echo '<img src="data:image/jpg;base64,' . base64_encode( $info['pic'] ) . '" width="100px" height="100px" />';
                                 ?>
-                            
+                                
                             </td>
                         </tr>
+
+                        <?php 
+                            }
+                        ?>
+
                     </table>
                 </div>
             </div>
-            <br>
             
-            <a href="rechercheLocation.php"> <input id="btn-Chercher" type="submit" value="Chercher un location" class="btn btn-primary"> </a>
+            <a href="rechercheLocation.php"> <input id="btn-Chercher" type="submit" value="Chercher un location" class="btn btn-success"> </a>
         </div>
     </div>
   
