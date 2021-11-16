@@ -1,3 +1,4 @@
+
 <?php 
     session_start(); 
     include('Configuration.php');
@@ -17,15 +18,18 @@
 
 ?>
 
-
-    <tr>
-        <td>
-            <a href="ajouterFavori.php?id_L=<?php echo $info['id_location'] ?>"> <button id="btn-heart" class="btn btn-info"><i class="far fa-heart"></i></button> </a> 
-            <button id="btn-star" class="btn btn-warning"><i class="fas fa-star"></i></button>
+<tr>
+        <td class="heart-favori">
+            <a href="ajouterFavori.php?id_L=<?php echo $info['id_location'] ?>"> 
+                <button id="btn-heart" class="btn btn-info"><i class="far fa-heart"></i></button> 
+            </a> 
+            <a href="detailLocation.php?id_L=<?php echo $info['id_location'] ?>"> 
+                <button id="btn-star" class="btn btn-warning"><i class="fas fa-star"></i></button>
+            </a> 
         </td>
         <td class="img">
             <?php 
-                echo '<img src="data:image/jpg;base64,' . base64_encode( $info['pic'] ) . '" width="100px" height="100px" />';
+                echo  '<img src="../images/'.$info['pic'].'" width=100px" height="100px" />';
             ?>
         </td>  
         <td class="td2">
@@ -43,7 +47,7 @@
     <tr>
         <td colspan="3">&nbsp;</td>
     </tr>
-   
+
 <?php
    
     }

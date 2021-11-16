@@ -160,7 +160,7 @@
                         <td>
                             <select name="province">
                                 <option value="Quebec">Quebec</option>
-                                <option value="Ontatio">Ontatio</option>
+                                <option value="Ontario">Ontatio</option>
                                 <option value="Nova Scotia">Nouvelle Ecosse</option>
                             </select>
                         </td>

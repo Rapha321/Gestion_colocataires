@@ -35,13 +35,14 @@
 
 <body>
 
-    <form method="POST" action="validerModifProfileLocataire.php?id_L=<?php echo $_GET['id_L'] ?>">
+    <form enctype="multipart/form-data" method="POST" action="validerModifProfileLocataire.php?id_L=<?php echo $_GET['id_L']?>" data-ajax='false'>
 
     <?php 
         $id = $_GET['id_L'];
         $req = $bdd->prepare('SELECT * FROM locataire WHERE id = ?');
         $req->execute([$id]);
         $info = $req->fetch();
+
     ?>
 
         <div class="jumbotron">
@@ -64,8 +65,8 @@
                     <tr>
                         <td></td>
                         <td>
-                            <!-- <div class="input-group mb-3">
-                                <input type="file" class="form-control" id="inputGroupFile02" name="pic_N" >
+                            <!-- <div class="mb-3">
+                                <input type="file" class="form-control" id="formFile" name="pic_N" value="<?php echo $info['pic'] ?>" default>
                             </div> -->
                         </td>
                     </tr>
@@ -86,5 +87,7 @@
     </form>
 
 </body>
+
+
 
 </html>

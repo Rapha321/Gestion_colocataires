@@ -143,7 +143,6 @@
     
         <div class="main">
 
-
             <div class="div-profile">
             <form method="POST" action="modifierProfileLocataire.php?id_L=<?php echo $id ?>">
                 <figure>
@@ -216,7 +215,7 @@
                             </td>
                             <td>
                                 <?php 
-                                echo '<img src="data:image/jpg;base64,' . base64_encode( $info['pic'] ) . '" width="100px" height="100px" />';
+                                echo '<img src="../images/'.$info['pic'].'" width="100px" height="100px" />';
                                 ?>
                                 
                             </td>
@@ -238,3 +237,4 @@
 </body>
 
 </html>
+

@@ -7,11 +7,32 @@
     $nom = $_POST['nom_N'];
     $prenom = $_POST['prenom_N'];
     $descr = $_POST['descr_N'];
-    // $pic = $_FILES['pic_N'];
 
-    // $_SESSION['nom'] = $nom;
-    // $_SESSION['prenom'] = $prenom;
-    // $_SESSION['descr'] = $descr;
+
+    $upload_status = FALSE;
+    if(isset($_FILES['pic_N']))
+    {
+        echo 'picture set <br>';
+    }
+    else
+    {
+        echo 'picture not set <br>';
+    }
+
+    if (isset($_FILES['pic_N']) && file_exists($_FILES['pic_N']['tmp_name']))
+    {
+        $image = $_FILES['pic_N']['tmp_name'];
+
+        //~ Check if image is an image
+        if (@getimagesize($image))
+        {
+            $upload_status = TRUE;
+            $name = $_FILES['pic_N']['name'];
+            move_uploaded_file($image, "../images/$name");
+        }
+    }
+
+    $pic=basename( $_FILES["pic_N"]["name"],".jpg");
 
     if (isset($nom) && isset($prenom) && isset($descr))
     {
@@ -20,17 +41,15 @@
                                                 ON locataire.id = b.id 
                                  SET nom = :nom, 
                                      prenom = :prenom,
-                                     descriptions = :descr;");
+                                     descriptions = :descr");
         
-        if ($update->execute(array(
+        $update->execute(array(
             ':id' => $id,
             ':nom' => $nom,
             ':prenom' => $prenom,
-            ':descr' => $descr
-        ))) {
-            header("location:profileLocataire.php");
-        }
-
+            ':descr' => $descr));
+            
+        header("location:profileLocataire.php");
   
     }
     

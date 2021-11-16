@@ -240,7 +240,6 @@
                 <a href="ajoutLocation.php"> <input id="btn-Chercher" type="submit" value="Ajouter un location" class="btn btn-primary"> </a>
             </div>
             
-            
         </div>
     </div>
   

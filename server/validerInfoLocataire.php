@@ -1,6 +1,7 @@
 <?php
 
     include('Configuration.php');
+    session_start();
 
     $nom = $_POST['nom'];
     $prenom = $_POST['prenom'];
@@ -38,7 +39,7 @@
                           SET nom=:nom,
                               prenom = :prenom,
                               descriptions = :descr,
-                              pic = :pic ;");
+                              pic = :pic");
 
     $req->execute(array(
         ':nom' => $nom,

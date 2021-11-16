@@ -6,20 +6,6 @@
     $id_locataire = intval($_SESSION['id']);
     $id_location = intval($_GET['id_L']);
 
-    
-        // $mysqli = new mysqli('localhost','root','','gestion_coloc');
-        
-        // $query = "INSERT INTO favori (locations, locataire) VALUES ($id_location, $id_locataire)";
-
-        // $exec = mysqli_query($mysqli, $query);
-
-        // if ($exec) {
-        //     echo "Location favori ajouter avec success!";
-        // }
-        // else {
-        //     echo mysqli_error($mysqli);
-        // }
-
     $favoriExist = false;
     $check = $bdd->prepare("SELECT * FROM favori");
     $check->execute();
@@ -52,3 +38,4 @@
     $req->closeCursor();
 
 ?>
+

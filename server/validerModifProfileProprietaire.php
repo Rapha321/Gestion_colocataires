@@ -7,8 +7,6 @@
     $nom = $_POST['nom_N'];
     $prenom = $_POST['prenom_N'];
     $descr = $_POST['descr_N'];
-    // $pic = $_FILES['pic_N'];
-
 
     if (isset($nom) && isset($prenom) && isset($descr))
     {
