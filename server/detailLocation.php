@@ -75,7 +75,7 @@
 
         <div class="detail-review">
 
-            <!-- DETAIL DU LOCATION -->
+            <!-- Afficher les details sur un location -->
             <div id="detail-location" class="jumbotron">
                 <div>
                     <img src="../images/<?php echo $info['pic'] ?>" alt="" width=250px" height="200px" />
@@ -146,7 +146,7 @@
                 </table>
             </div>
 
-            <!-- REVIEW -->
+            <!-- Evaluer un location -->
             <div id="review" class="jumbotron">
                 <div>
                     <?php 
@@ -164,7 +164,7 @@
                                 $evaluateur->execute();
                                 $res = $evaluateur->fetch();
                             ?>
-                            <td> <i>Evaluer par: <?php echo $res['nom'], $res['prenom']?> </i></td>
+                            <td> <i>Evaluer par: <?php echo $res['nom'], " ", $res['prenom']?> </i></td>
                             <td class="star"> 
                                     <?php                       
                                         if ($result['etoile'] == 1) {echo '⭐';} 

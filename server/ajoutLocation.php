@@ -36,6 +36,7 @@
         include('header.php');
     ?>
 
+    <!-- Formulaire pour modifier un location -->
     <form enctype="multipart/form-data" method="POST" action="validerAjoutLocation.php" data-ajax='false'>
 
         <div class="jumbotron">

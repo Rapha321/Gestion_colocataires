@@ -47,9 +47,8 @@
 
     ?>
 
+    <!-- Formulaire pour modifier un location -->
     <form method="POST" action="validerModifierLocation.php?id_L=<?php echo $info['id_location'] ?>">
-
-
 
         <div class="jumbotron">
             <div class="container1">

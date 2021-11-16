@@ -8,6 +8,7 @@
     $prenom = $_POST['prenom_N'];
     $descr = $_POST['descr_N'];
 
+    // Mise a jour le database du proprietaire avec les information additionnel saisie
     if (isset($nom) && isset($prenom) && isset($descr))
     {
         $update = $bdd->prepare("UPDATE proprietaire 
@@ -31,6 +32,7 @@
     {
 ?>
 
+<!-- Si le nom, prenom ou description ne pas saisie, affiche un message d'erreur -->
     <!DOCTYPE html>
     <html>
 

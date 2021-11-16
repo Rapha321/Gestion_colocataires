@@ -24,6 +24,7 @@
     $id_L = $_GET['id_L'];
     $id_L = intval($id_L);
 
+    // Mise a jour du database location avec le nouveau information saisie
     $req = $bdd->prepare("UPDATE `locations` 
                           SET `types` = ?, `grandeur` = ?, `descriptions` = ?, `bail` = ?, `montantloyer` = ?, `meubler` = ?, 
                          `fumeur` = ?, `animal` = ?, `electricite` = ?, `chauffage` = ?, `ville` = ?, `province` = ?, `street` = ?, 

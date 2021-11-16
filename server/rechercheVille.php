@@ -18,7 +18,8 @@
 
 ?>
 
-<tr>
+    <!-- Afficher seulement les locations avec la ville choisi par le locataire -->
+    <tr>
         <td class="heart-favori">
             <a href="ajouterFavori.php?id_L=<?php echo $info['id_location'] ?>"> 
                 <button id="btn-heart" class="btn btn-info"><i class="far fa-heart"></i></button> 

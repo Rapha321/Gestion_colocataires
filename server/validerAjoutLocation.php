@@ -20,9 +20,9 @@
     $codepostal = isset($_POST['codepostal']) ? $_POST['codepostal'] : null;
     $longitude = isset($_POST['longitude']) ? floatval($_POST['longitude']) : null;
     $latitude = isset($_POST['latitude']) ? floatval($_POST['latitude']) : null;
-    // $pic = isset($_POST['pic_N']) ? $_POST['pic_N'] : null;
     $id = intval($_SESSION['id']);
 
+    // Uploader le photo 
     $upload_status = FALSE;
     if(isset($_FILES['pic_N']))
     {
@@ -46,8 +46,10 @@
         }
     }
 
+    // Sauvegarder le nom du photo
     $pic=basename( $_FILES["pic_N"]["name"],".jpg");
 
+    // Ajouter une nouvelle location dans le database locations
     try  {
         $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $bdd->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
@@ -67,6 +69,5 @@
     }
 
     $req->closeCursor();
-
 
 ?>

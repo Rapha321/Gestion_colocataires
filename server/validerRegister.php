@@ -6,6 +6,7 @@
     $email = $_POST['email'];
     $pwd = $_POST['password'];
 
+    // Si ce un locataire - inserer l'email et password dans le database 'locataire'
     if ($jeSuisUn == "locataire") 
     {
         $req = $bdd->prepare("INSERT INTO `locataire` (`email`, `pwd`) VALUES (?,?)");
@@ -24,6 +25,7 @@
         }
     } 
 
+    // Si ce un proprietaire - inserer l'email et password dans le database 'proprietaire'
     else if ($jeSuisUn == "proprietaire") 
     {
         $req = $bdd->prepare("INSERT INTO proprietaire (email, pwd) VALUES (?,?)");

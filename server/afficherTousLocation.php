@@ -7,7 +7,7 @@
     while ($info = $select->fetch())
     {
 ?>
-
+    <!-- Afficher toutes les location -->
     <tr>
         <td class="heart-favori">
             <a href="ajouterFavori.php?id_L=<?php echo $info['id_location'] ?>"> 

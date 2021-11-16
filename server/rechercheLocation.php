@@ -2,10 +2,7 @@
     session_start(); 
     include('Configuration.php');
     
-    
     $result2 = $bdd->query("SELECT * FROM locations"); 
-
-    
 
 ?>
 
@@ -29,6 +26,7 @@
     
     <script type='text/javascript'>
 
+        // Afficher toutes les location quand la fenetre est loader
         window.load=$( document ).ready(function() {
             $.ajax({
                 type:'POST',
@@ -39,6 +37,7 @@
             }); 
         }); 
 
+        // A chaque foi que l'utilisateur choisi une ville, l'affichage change pour afficher les location a la ville choisi
         function selectVille() {
             var x = document.getElementById("ville").value;
             console.log(x);
@@ -53,6 +52,7 @@
 
         }
 
+        // A chaque foi que l'utilisateur choisi une type de location, l'affichage change pour afficher les type de location choisi
         function selectTypes() {
             var x = document.getElementById("types").value;
             $.ajax({
@@ -65,6 +65,7 @@
             });
         }
 
+        // A chaque foi que l'utilisateur choisi un grangeur, l'affichage change pour afficher les location avec la grandeur choisi
         function selectGrandeur() {
             var x = document.getElementById("grandeur").value;
             $.ajax({
@@ -77,6 +78,7 @@
             });
         }
 
+        // Apel au map en utilisant l'API de google 
         function initMap() {
             var map;
             var bounds = new google.maps.LatLngBounds();
@@ -140,8 +142,6 @@
         }
 
     </script>
-
-
 
     <style>
         .table-favori {
@@ -336,10 +336,5 @@
     </div>
 
 </body>
-
-<script >
-       
-
-    </script>
 
 </html>

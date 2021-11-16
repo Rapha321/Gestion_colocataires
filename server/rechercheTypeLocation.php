@@ -20,7 +20,7 @@
     {
 
 ?>
-
+    <!-- Afficher seulement les locations avec le type de loaction choisi par le locataire -->
     <tr>
         <td class="heart-favori">
             <a href="ajouterFavori.php?id_L=<?php echo $info[$i]['id_location'] ?>"> 

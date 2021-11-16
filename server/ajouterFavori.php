@@ -12,6 +12,7 @@
     $info = $check->fetchAll();
     for ($i=0; $i < sizeof($info); $i++)
     {
+        // Si le locataire a deja ajouter cette location dans son favori, affiche un message
         if ($info[$i]['locations'] == $id_location && $info[$i]['locataire'] == $id_locataire ) 
         {
             echo "Vous avez deja cet location dans votre favori!";
@@ -20,7 +21,7 @@
         }
     }
 
-
+    // Si le locataire na pas cette location dans son favori, ajoute le location dans son favori
     if ($favoriExist == false)
     {
         $req = $bdd->prepare("INSERT INTO favori (locations, locataire) VALUES (?,?)"); 

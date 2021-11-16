@@ -4,8 +4,6 @@
 <head>
     <title>location-A-tous</title>
 
-    <!-- CSS -->
-    <!-- <link rel="stylesheet" type="text/css" href="../styles/infoProprietaire.css"> -->
     <link rel="stylesheet" href="../styles/infoProprietaire.css?v=<?php echo time(); ?>">
 
     <!-- BOOTSTRAP -->
