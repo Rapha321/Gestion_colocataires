@@ -190,6 +190,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            padding-top: 10px;
         }
 
         .grandeur {
@@ -264,7 +265,6 @@
             <div class="filtre">
                 <div>
                     <span>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         Ville :
                         <select name="ville" id="ville" onchange="selectVille()" >
                             <option value="neutre">Neutre</option>
@@ -306,21 +306,7 @@
 
                         </select>
                     </span>
-                    <!-- <span>
-                        &nbsp;&nbsp;&nbsp;
-                        Prix Min:
-                        <input type="text" value="" name="prixMin" id="prixMin" size="3" onchange="selectPrixMin()" placeholder="0">$
-                        &nbsp;&nbsp;&nbsp;
-                        Prix Max:
-                        <input type="text" value="" name="prixMax" id="prixMax" onchange="selectPrixMax()" size="3" placeholder="5000">$
-                        &nbsp;&nbsp;&nbsp;
-                    </span> -->
-
-                    <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Recherche</button>
-                    &nbsp;&nbsp;&nbsp; -->
                 </div>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <!-- <a href="profileLocataire.php" class="retourProfile"><input type="button" value="Retour au profile" class="btn btn-info"></a> -->
                 
             </div>
            

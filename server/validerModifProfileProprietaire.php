@@ -25,8 +25,6 @@
         ))) {
             header("location:profileProprietaire.php");
         }
-
-  
     }
     
     else 

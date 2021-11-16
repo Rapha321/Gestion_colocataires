@@ -48,13 +48,16 @@
 
     $pic=basename( $_FILES["pic_N"]["name"],".jpg");
 
-    $req = $bdd->prepare("INSERT INTO `locations` (`types`, `grandeur`, `descriptions`, `bail`, `montantloyer`, `meubler`, 
-                         `fumeur`, `animal`, `electricite`, `chauffage`, `ville`, `province`, `street`, `pays`, `codePostal`, `pic`, 
-                         `id_proprietaire`, `latitude`, `longitude`) 
-                          VALUES ('$types','$grandeur', '$descr', '$bail', '$montant', '$meubler', '$fumeur', '$animal', '$electricite', 
-                         '$chauffage', '$ville', '$province', '$rue', '$pays', '$codepostal', '$pic', '$id', '$latitude', '$longitude')"); 
-
     try  {
+        $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $bdd->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+
+        $req = $bdd->prepare("INSERT INTO `locations` (`types`, `grandeur`, `descriptions`, `bail`, `montantloyer`, `meubler`, 
+        `fumeur`, `animal`, `electricite`, `chauffage`, `ville`, `province`, `street`, `pays`, `codePostal`, `pic`, 
+        `id_proprietaire`, `latitude`, `longitude`) 
+         VALUES ('$types','$grandeur', '$descr', '$bail', '$montant', '$meubler', '$fumeur', '$animal', '$electricite', 
+        '$chauffage', '$ville', '$province', '$rue', '$pays', '$codepostal', '$pic', '$id', '$latitude', '$longitude')"); 
+
         $req->execute();
         echo "Location added successfully!";
         header("location:profileProprietaire.php");

@@ -15,14 +15,13 @@
 
     <?php include('../server/header.php'); ?>
 
-    
-
     <h1>Bienvenue! </h1>
 
     <h4>Veuillez saisir les information suivantes:</h4>
 
-    <form enctype="multipart/form-data" method="POST" action="../server/validerInfoLocataire.php" class="jumbotron" data-ajax='false' >
 
+    <!-- Enregistrement d'un locataire -->
+    <form enctype="multipart/form-data" method="POST" action="../server/validerInfoLocataire.php" class="jumbotron" data-ajax='false' >
         <table>
             <tr>
                 <td>Nom :</td>
@@ -58,7 +57,6 @@
                 </td>
             </tr>
         </table>
-
     </form>
 
 </body>

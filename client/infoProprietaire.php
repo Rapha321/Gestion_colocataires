@@ -22,6 +22,7 @@
         <h4>Veuillez saisir les information suivantes:</h4>
     </div>
 
+    <!-- Enregistrement d'un proprietaire -->
     <form enctype="multipart/form-data" method="POST" action="../server/validerInfoProprietaire.php" data-ajax='false' >
         <div class="jumbotron">
             <table>

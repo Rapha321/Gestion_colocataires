@@ -173,7 +173,7 @@
                         <td>
                             <select name="province_N">
                                 <option value="Quebec" <?php if($info['province'] == "Quebec") { echo "selected"; } ?> >Quebec</option>
-                                <option value="Ontatio" <?php if($info['province'] == "Ontatio") { echo "selected"; } ?> >Ontatio</option>
+                                <option value="Ontario" <?php if($info['province'] == "Ontario") { echo "selected"; } ?> >Ontario</option>
                                 <option value="Nouvelle Ecosse" <?php if($info['province'] == "Nouvelle Ecosse") { echo "selected"; } ?> >Nouvelle Ecosse</option>
                             </select>
                         </td>
